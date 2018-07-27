@@ -1,3 +1,4 @@
+
 // Dependencies
 var express = require("express");
 var bodyParser = require("body-parser");
@@ -30,13 +31,7 @@ var friends = [
     }
 ];
 
-app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "/app/public/home.html"))
-});
 
-app.get("/survey", function (req, res) {
-    res.sendFile(path.join(__dirname, "/app/public/survey.html"))
-});
 
 app.get("/api/friends", function (req, res) {
     return res.json(friends);
@@ -46,10 +41,12 @@ app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
 });
 
-app.post("/api/characters", function (req, res) {
+app.post("/api/friends", function (req, res) {
     var newFriend = req.body;
 
     newFriend.routeName = newFriend.name.replace(/\s+/g, "").toLowerCase();
     friends.push(newFriend);
     res.json(newFriend);
 });
+
+require("./app/routing/htmlRoutes")(app, path)
