@@ -12,41 +12,10 @@ var PORT = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var friends = [
-    {
-        "name": "Little Timmy",
-        "photo": "https://tinyurl.com/y9xpumwt",
-        "scores": [
-            5,
-            1,
-            4,
-            4,
-            5,
-            1,
-            2,
-            5,
-            4,
-            1
-        ]
-    }
-];
-
-
-
-app.get("/api/friends", function (req, res) {
-    return res.json(friends);
-});
-
 app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
 });
 
-app.post("/api/friends", function (req, res) {
-    var newFriend = req.body;
-
-    newFriend.routeName = newFriend.name.replace(/\s+/g, "").toLowerCase();
-    friends.push(newFriend);
-    res.json(newFriend);
-});
-
-require("./app/routing/htmlRoutes")(app, path)
+require("./app/routing/htmlRoutes")(app, path);
+require("./app/routing/apiRoutes")(app, path);
+require("./app/data/friends");
